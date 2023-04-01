@@ -16,9 +16,7 @@ public class ChromeWebDriver implements IDriver {
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--ignore-certificate-errors");
 
-    LoggingPreferences logPrefs = new LoggingPreferences();
-    logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
-    chromeOptions.setCapability("loggingPrefs", logPrefs);
+
 
     WebDriverManager.chromedriver().setup();
 

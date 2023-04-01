@@ -16,7 +16,7 @@
         <faker.version>1.0.2</faker.version>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
 
-        <browser>chrome</browser>
+        <browser>firefox</browser>
     </properties>
 
     <dependencies>
