@@ -7,8 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-
 import java.lang.annotation.Annotation;
 
 public abstract class BasePageAbs<T> extends BaseObj<T> {
@@ -35,6 +33,7 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
   }
 
   private String headerLocator = "//div[contains(text(), '%s')]";
+
 
   public T headerIsEqualTo(CoursesData coursesData) {
     String locator = String.format(headerLocator, coursesData.getName());

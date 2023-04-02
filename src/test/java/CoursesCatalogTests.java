@@ -23,19 +23,20 @@ public class CoursesCatalogTests {
   }
 
   @Test
-  void checkPageHeaderWhenClickOnCourseTest(){
+  void checkPageHeaderWhenClickOnCourseTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByName(CoursesData.BI_ANALITIC)
-        .headerIsEqualTo(CoursesData.BI_ANALITIC);
+        .clickCourseByName(CoursesData.KAFKA_COURSE)
+        .headerIsEqualTo(CoursesData.KAFKA_COURSE);
 
   }
 
   @Test
-  void clickEarliestCourseTest(){
+  void clickEarliestCourseTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByDate();
+        .clickCourseByDate()
+        .checkDate();
   }
 
   @AfterEach
