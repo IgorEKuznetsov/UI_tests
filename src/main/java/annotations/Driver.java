@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Endpoints {
-  EndpointTemplate[] value();
+@Target(ElementType.FIELD)
+public @interface Driver {
+  String driver() default "";
 }

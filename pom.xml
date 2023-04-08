@@ -10,13 +10,15 @@
 
     <properties>
         <driver.host>https://otus.ru</driver.host>
-        <selenium.java.version>4.8.1</selenium.java.version>
+        <selenium.java.version>3.141.59</selenium.java.version>
         <webdrivermanager.version>5.3.2</webdrivermanager.version>
         <junit.version>5.9.1</junit.version>
         <faker.version>1.0.2</faker.version>
-        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
 
         <browser>chrome</browser>
+        <webdriver.timeouts.implicitlywait>5000</webdriver.timeouts.implicitlywait>
+
     </properties>
 
     <dependencies>
@@ -47,6 +49,11 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.6</version>
+        </dependency>
 
     </dependencies>
 
@@ -70,6 +77,7 @@
                     <systemPropertyVariables>
                         <driver.host>${driver.host}</driver.host>
                         <browser>${browser}</browser>
+                        <webdriver.timeouts.implicitlywait>${webdriver.timeouts.implicitlywait}</webdriver.timeouts.implicitlywait>
                     </systemPropertyVariables>
 
                 </configuration>
@@ -82,6 +90,7 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <encoding>UTF-8</encoding>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>

@@ -1,26 +1,30 @@
 package driver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import exceptions.DriverTypeNotSupported;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.Locale;
 
 public class DriverFactory {
 
-  private String browser = System.getProperty("browser", "chrome").toLowerCase(Locale.ROOT);
+  private String browserType = System.getProperty("browser", "chrome").toLowerCase(Locale.ROOT);
 
-  public WebDriver getBrowserDriver() {
-    switch (browser) {
+  public EventFiringWebDriver getBrowserDriver() {
+    switch (this.browserType) {
       case "chrome":
-        IDriver chromeDriver = new ChromeWebDriver();
-        return chromeDriver.getDriver();
+        return new EventFiringWebDriver(new ChromeWebDriver().getDriver());
       case "firefox":
-        IDriver firefoxDriver = new FirefoxWebDriver();
-        return firefoxDriver.getDriver();
+        return new EventFiringWebDriver(new FirefoxWebDriver().getDriver());
       case "opera":
-        IDriver operaDriver = new OperaWebDriver();
-        return operaDriver.getDriver();
+        return new EventFiringWebDriver(new OperaWebDriver().getDriver());
       default:
+        try {
+          throw new DriverTypeNotSupported(this.browserType);
+        } catch (DriverTypeNotSupported e) {
+          e.printStackTrace();
+        }
         return null;
     }
   }

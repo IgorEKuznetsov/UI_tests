@@ -1,9 +1,18 @@
 package data;
 
+import org.junit.jupiter.params.provider.Arguments;
+
+import java.util.stream.Stream;
+
 public enum CoursesData {
 
   KAFKA_COURSE("Apache Kafka"),
-  BI_ANALITIC("BI-аналитика");
+  JAVA_DEVELOPER("Специализация Java-разработчик"),
+  MACHINE_LEARNING("Machine Learning"),
+  IOS("iOS Developer");
+
+
+
 
   private String name;
 
@@ -14,4 +23,5 @@ public enum CoursesData {
   public String getName() {
     return name;
   }
+
 }

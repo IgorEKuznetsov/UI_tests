@@ -2,6 +2,7 @@ package pages;
 
 import annotations.Path;
 import data.CoursesData;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,28 +24,38 @@ public class MainPage extends BasePageAbs<MainPage> {
   }
 
   private String searchCourseDate;
-
-
-  private String courseNameLocator = "//div[contains(text(), '%s')]";
-
-
+  private String courseNameLocator = "//div[contains(text(), '%s')]/..";
   @FindBy(css = ".lessons__new-item-bottom")
   private List<WebElement> startCourseSelector;
+  @FindBy(css = ".cookies")
+  private WebElement cookieElement;
 
   public CoursePage clickCourseByName(CoursesData coursesData) {
-    String locator = String.format(courseNameLocator, coursesData.getName());
-    driver.findElements(By.xpath(locator)).get(0).click();
+    WebElement courseSelector = driver.findElement(By.xpath(String.format(courseNameLocator, coursesData.getName())));
+    clickCourseBy(courseSelector);
+
     return new CoursePage(driver);
   }
 
-  public CoursePage clickCourseByDate() {
-    startCourseSelector.stream()
-        .filter(el -> el.getText().contains(getCourseDate())).collect(Collectors.toList()).get(0).click();
+  public CoursePage clickCourseByDate(Boolean isEarly) {
+    WebElement courseSelector = startCourseSelector.stream()
+        .filter(el -> el.getText().contains(getCourseDate(isEarly))).collect(Collectors.toList()).get(0);
+    clickCourseBy(courseSelector);
 
     return new CoursePage(driver, searchCourseDate);
   }
 
-  public String getCourseDate() {
+  public void clickCourseBy(WebElement element) {
+    deleteCookiesWebElement(driver, cookieElement);
+    actions.moveToElement(element).build().perform();
+    Assertions.assertAll(
+        () -> Assertions.assertTrue(waiter.elementShouldBeVisible(element)),
+        () -> Assertions.assertTrue(waiter.attributeShouldBePresent(element, "transition"))
+    );
+    element.click();
+  }
+
+  public String getCourseDate(Boolean isEarly) {
     SimpleDateFormat format = new SimpleDateFormat("d MMMM", Locale.ROOT);
     Pattern searchMonthPattern = Pattern.compile("(\\d{1,2}\\s(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря))");
     List<String> filtered = new ArrayList<>();
@@ -64,13 +75,16 @@ public class MainPage extends BasePageAbs<MainPage> {
             throw new RuntimeException(e);
           }
         })
-        .sorted()
+        .sorted((s1, s2) -> {
+          if (isEarly) {
+            return s1.compareTo(s2);
+          }
+          return s2.compareTo(s1);
+        })
         .map(date -> format.format(date))
         .collect(Collectors.toList()).get(0);
 
-    searchCourseDate = courseDate.replaceAll("(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)", getMonth(courseDate));
-
-    return searchCourseDate;
+    return searchCourseDate = courseDate.replaceAll("(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)", getMonth(courseDate));
   }
 
   public String getMonth(String text) {
