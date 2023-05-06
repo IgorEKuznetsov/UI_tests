@@ -2,6 +2,7 @@ package pages;
 
 import annotations.Path;
 import data.CoursesData;
+import data.MonthData;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -67,7 +68,7 @@ public class MainPage extends BasePageAbs<MainPage> {
       }
     }
     String courseDate = filtered.stream()
-        .map(el -> el.replaceAll("(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)", getMonth(el)))
+        .map(el -> el.replaceAll("января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря", getMonth(el)))
         .map(el -> {
           try {
             return format.parse(el);
@@ -84,59 +85,59 @@ public class MainPage extends BasePageAbs<MainPage> {
         .map(date -> format.format(date))
         .collect(Collectors.toList()).get(0);
 
-    return searchCourseDate = courseDate.replaceAll("(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)", getMonth(courseDate));
+    return searchCourseDate = courseDate.replaceAll("Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec", getMonth(courseDate));
   }
 
   public String getMonth(String text) {
     switch (text.replaceAll("\\d{1,2}\\s", "")) {
       case "января":
-        return "January";
+        return MonthData.JANUARY.getNameEng();
       case "Jan":
-        return "января";
+        return MonthData.JANUARY.getNameRus();
       case "февраля":
-        return "February";
+        return MonthData.FEBRUARY.getNameEng();
       case "Feb":
-        return "февраля";
+        return MonthData.FEBRUARY.getNameRus();
       case "марта":
-        return "March";
+        return MonthData.MARCH.getNameEng();
       case "Mar":
-        return "марта";
+        return MonthData.MARCH.getNameRus();
       case "апреля":
-        return "April";
+        return MonthData.APRIL.getNameEng();
       case "Apr":
-        return "апреля";
+        return MonthData.APRIL.getNameRus();
       case "мая":
-        return "May";
+        return MonthData.MAY.getNameEng();
       case "May":
-        return "мая";
+        return MonthData.MAY.getNameRus();
       case "июня":
-        return "June";
+        return MonthData.JUNE.getNameEng();
       case "Jun":
-        return "июня";
+        return  MonthData.JUNE.getNameRus();
       case "июля":
-        return "July";
+        return MonthData.JULY.getNameEng();
       case "Jul":
-        return "июля";
+        return MonthData.JULY.getNameRus();
       case "августа":
-        return "August";
+        return MonthData.AUGUST.getNameEng();
       case "Aug":
-        return "августа";
+        return MonthData.AUGUST.getNameRus();
       case "сентября":
-        return "September";
+        return MonthData.SEPTEMBER.getNameEng();
       case "Sep":
-        return "сентября";
+        return MonthData.SEPTEMBER.getNameRus();
       case "октября":
-        return "October";
+        return MonthData.OCTOBER.getNameEng();
       case "Oct":
-        return "октября";
+        return MonthData.OCTOBER.getNameRus();
       case "ноября":
-        return "November";
+        return MonthData.NOVEMBER.getNameEng();
       case "Nov":
-        return "ноября";
+        return MonthData.NOVEMBER.getNameRus();
       case "декабря":
-        return "December";
+        return MonthData.DECEMBER.getNameEng();
       case "Dec":
-        return "декабря";
+        return MonthData.DECEMBER.getNameRus();
       default:
         return null;
     }

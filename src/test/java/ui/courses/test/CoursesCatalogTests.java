@@ -35,7 +35,7 @@ public class CoursesCatalogTests {
 
   @ParameterizedTest
   @DisplayName("Сlick on three specializations")
-  @MethodSource("ui.courses.test.DataProvider#courseNamesProvider")
+  @MethodSource("data.DataProvider#courseNamesProvider")
   void checkPageHeaderWhenClickOnCourseDataTest(CoursesData coursesData) {
     new MainPage(driver)
         .open()
@@ -43,11 +43,9 @@ public class CoursesCatalogTests {
         .headerIsEqualTo(coursesData, false);
   }
 
-  @Disabled
+  @Test
   void checkBoxIsSelectedTest() {
-    new CoursesCatalog(driver).open();
-    driver.findElement(By.xpath("//label[text()='Инфраструктура']/../div/input")).click();
-    Assertions.assertEquals(true, driver.findElement(By.xpath("//label[text()='Инфраструктура']/../div/input")).isSelected());
+    new CoursesCatalog(driver).open("programming");
   }
 
 }

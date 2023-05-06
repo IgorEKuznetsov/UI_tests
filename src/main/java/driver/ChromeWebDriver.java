@@ -14,9 +14,9 @@ public class ChromeWebDriver implements IDriver {
     ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--ignore-certificate-errors");
-
     chromeOptions.addArguments("--remote-allow-origins=*");
     chromeOptions.addArguments("--disable-notifications");
+    chromeOptions.addArguments("--start-maximized");
 
     WebDriverManager.chromedriver().setup();
 

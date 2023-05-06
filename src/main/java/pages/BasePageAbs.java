@@ -1,6 +1,8 @@
 package pages;
 
 import annotations.Path;
+import annotations.UrlTemplate;
+import annotations.Urls;
 import baseobject.BaseObj;
 import data.CoursesData;
 import org.apache.commons.lang3.StringUtils;
@@ -22,11 +24,28 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
     return (T) this;
   }
 
+  public T open(String categoryName) {
+    driver.get(getBaseUrl() + getPathFromTemplate(categoryName));
+    return (T) this;
+  }
+
   private String getPath() {
     Class<? extends BasePageAbs> clazz = getClass();
     Annotation annotation = clazz.getAnnotation(Path.class);
     if (annotation != null) {
       return ((Path) annotation).value();
+    }
+    return "";
+  }
+
+  private String getPathFromTemplate(String categoryName) {
+    Class<? extends BasePageAbs> clazz = getClass();
+    Urls urls = clazz.getAnnotation(Urls.class);
+    UrlTemplate urlTemplate = urls.value();
+    if (urlTemplate != null) {
+      String category = String.format(urlTemplate.value(), categoryName);
+      log.info("Category: " + category);
+      return getPath() + category;
     }
     return "";
   }

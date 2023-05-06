@@ -22,7 +22,6 @@ public abstract class BaseObj<T> {
     this.log = LoggerFactory.getLogger("otus");
     this.waiter = new CustomWaiter(driver);
     PageFactory.initElements(driver, this);
-    driver.manage().window().maximize();
 
   }
 }
