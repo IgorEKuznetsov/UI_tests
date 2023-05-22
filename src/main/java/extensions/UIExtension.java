@@ -10,10 +10,14 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.HashSet;
@@ -38,7 +42,7 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback {
   }
 
   @Override
-  public void beforeEach(ExtensionContext extensionContext) {
+  public void beforeEach(ExtensionContext extensionContext) throws MalformedURLException {
     driver = new DriverFactory().getBrowserDriver();
     driver.register(new CustomListener());
     Set<Field> fields = getAnnotatedFields(Driver.class, extensionContext);
@@ -63,7 +67,7 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback {
   @Override
   public void afterEach(ExtensionContext extensionContext) {
     if (driver != null) {
-      driver.close();
+      //driver.close();
       driver.quit();
     }
   }

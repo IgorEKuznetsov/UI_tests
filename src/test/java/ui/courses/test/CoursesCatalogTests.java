@@ -21,8 +21,8 @@ public class CoursesCatalogTests {
   void checkPageHeaderWhenClickOnCourseTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByName(CoursesData.KAFKA_COURSE)
-        .headerIsEqualTo(CoursesData.KAFKA_COURSE, true);
+        .clickCourseByName(CoursesData.RECOMMENDER_SYSTEMS)
+        .headerIsEqualTo(CoursesData.RECOMMENDER_SYSTEMS, true);
   }
 
   @Test

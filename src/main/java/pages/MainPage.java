@@ -58,7 +58,7 @@ public class MainPage extends BasePageAbs<MainPage> {
 
   public String getCourseDate(Boolean isEarly) {
     SimpleDateFormat format = new SimpleDateFormat("d MMMM", Locale.ROOT);
-    Pattern searchMonthPattern = Pattern.compile("(\\d{1,2}\\s(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря))");
+    Pattern searchMonthPattern = Pattern.compile("(\\d{1,2}\\s(January|February|March|April|May|June|July|August|September|October|November|December))");
     List<String> filtered = new ArrayList<>();
 
     for (WebElement element : startCourseSelector) {
@@ -67,8 +67,8 @@ public class MainPage extends BasePageAbs<MainPage> {
         filtered.add(m.group(1));
       }
     }
-    String courseDate = filtered.stream()
-        .map(el -> el.replaceAll("января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря", getMonth(el)))
+    return searchCourseDate = filtered.stream()
+        // .map(el -> el.replaceAll("января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря", getMonth(el)))
         .map(el -> {
           try {
             return format.parse(el);
@@ -84,8 +84,9 @@ public class MainPage extends BasePageAbs<MainPage> {
         })
         .map(date -> format.format(date))
         .collect(Collectors.toList()).get(0);
+    // return searchCourseDate;
 
-    return searchCourseDate = courseDate.replaceAll("Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec", getMonth(courseDate));
+    // return searchCourseDate = courseDate.replaceAll("Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec", getMonth(courseDate));
   }
 
   public String getMonth(String text) {
@@ -113,7 +114,7 @@ public class MainPage extends BasePageAbs<MainPage> {
       case "июня":
         return MonthData.JUNE.getNameEng();
       case "Jun":
-        return  MonthData.JUNE.getNameRus();
+        return MonthData.JUNE.getNameRus();
       case "июля":
         return MonthData.JULY.getNameEng();
       case "Jul":
