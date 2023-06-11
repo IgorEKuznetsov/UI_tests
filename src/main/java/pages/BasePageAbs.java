@@ -54,7 +54,7 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
     return StringUtils.stripEnd(System.getProperty("driver.host"), "/");
   }
 
-  private String courseLocator = "//div[contains(text(), '%s')]";
+  private String courseLocator = "//strong[contains(text(), '%s')]";
   private String specializationLocator = "//h1[contains(text(), '%s')]";
 
 
@@ -63,6 +63,7 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
     if (isCourseLocator) {
       locator = String.format(courseLocator, coursesData.getName());
     } else locator = String.format(specializationLocator, coursesData.getName());
+    waiter.elementShouldBeVisible(driver.findElements(By.xpath(locator)).get(0));
     Assertions.assertEquals(coursesData.getName(), driver.findElements(By.xpath(locator)).get(0).getText());
     return (T) this;
   }

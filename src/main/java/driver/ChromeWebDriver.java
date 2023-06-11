@@ -6,11 +6,15 @@ import listeners.CustomListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.logging.Level;
 
 
 public class ChromeWebDriver implements IDriver {
@@ -23,7 +27,10 @@ public class ChromeWebDriver implements IDriver {
     chromeOptions.addArguments("--disable-notifications");
     chromeOptions.addArguments("--start-maximized");
 
-    //    WebDriverManager.chromedriver().setup();
+    chromeOptions.addArguments("--enable-extensions");
+    chromeOptions.addArguments("--homepage=about:blank");
+    chromeOptions.addArguments("--no-first-run");
+
 
     //DesiredCapabilities capabilities = new DesiredCapabilities();
 
@@ -31,11 +38,21 @@ public class ChromeWebDriver implements IDriver {
     chromeOptions.setCapability("browserVersion", System.getProperty("browser.version", "112.0"));
     chromeOptions.setCapability("enableVNC", true);
     chromeOptions.setCapability("sessionTimeout", "10m");
+    chromeOptions.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "eager");
+    chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
-    return new RemoteWebDriver(
-        URI.create("http://192.168.56.1:24/wd/hub").toURL(),
-        chromeOptions
-    );
+    LoggingPreferences logPrefs = new LoggingPreferences();
+    logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
+    chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+
+    WebDriverManager.chromedriver().setup();
+
+    return new ChromeDriver(chromeOptions);
+
+    //    return new RemoteWebDriver(
+    //        URI.create("http://192.168.56.1:24/wd/hub").toURL(),
+    //        chromeOptions
+    //    );
   }
 
 }

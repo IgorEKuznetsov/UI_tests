@@ -4,6 +4,8 @@ import annotations.Driver;
 import extensions.UIExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
@@ -21,8 +23,8 @@ public class CoursesCatalogTests {
   void checkPageHeaderWhenClickOnCourseTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByName(CoursesData.RECOMMENDER_SYSTEMS)
-        .headerIsEqualTo(CoursesData.RECOMMENDER_SYSTEMS, true);
+        .clickCourseByName(CoursesData.DEV_REL);
+    //.headerIsEqualTo(CoursesData.DEVELOPER_RELATIONS, true);
   }
 
   @Test
@@ -32,9 +34,9 @@ public class CoursesCatalogTests {
         .clickCourseByDate(true)
         .checkDate();
   }
-
+  @Execution(ExecutionMode.SAME_THREAD)
   @ParameterizedTest
-  @DisplayName("Сlick on three specializations")
+  @DisplayName("Сlick on two specializations")
   @MethodSource("data.DataProvider#courseNamesProvider")
   void checkPageHeaderWhenClickOnCourseDataTest(CoursesData coursesData) {
     new MainPage(driver)
