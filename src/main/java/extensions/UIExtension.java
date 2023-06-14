@@ -1,68 +1,37 @@
 package extensions;
 
-import annotations.Driver;
-import driver.DriverFactory;
-
 import listeners.CustomListener;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.*;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.util.HashSet;
-import java.util.Set;
+
+import driver.DriverFactory;
+import pages.MainPage;
+
 
 public class UIExtension implements BeforeEachCallback, AfterEachCallback {
 
   private EventFiringWebDriver driver = null;
 
-  private Set<Field> getAnnotatedFields(Class<? extends Annotation> annotation, ExtensionContext extensionContext) {
-    Set<Field> set = new HashSet<>();
-    Class<?> testClass = extensionContext.getTestClass().get();
-    while (testClass != null) {
-      for (Field field : testClass.getDeclaredFields()) {
-        if (field.isAnnotationPresent(annotation)) {
-          set.add(field);
-        }
-      }
-      testClass = testClass.getSuperclass();
-    }
-    return set;
-  }
 
   @Override
-  public void beforeEach(ExtensionContext extensionContext) throws MalformedURLException {
+  public void beforeEach(ExtensionContext extensionContext) throws Exception {
     driver = new DriverFactory().getBrowserDriver();
     driver.register(new CustomListener());
-    Set<Field> fields = getAnnotatedFields(Driver.class, extensionContext);
 
-    for (Field field : fields) {
-      if (field.getType().getName().equals(WebDriver.class.getName())) {
-        AccessController.doPrivileged((PrivilegedAction<Void>)
-            () -> {
-              try {
-                field.setAccessible(true);
-                field.set(extensionContext.getTestInstance().get(), driver);
-              } catch (IllegalAccessException e) {
-                throw new Error(String.format("Could not access or set webdriver in field: %s - is this field public?", field), e);
-              }
-              return null;
-            }
-        );
-      }
+    Class<?> testClass = extensionContext.getTestClass().get();
+    Field field = testClass.getDeclaredField("driver");
+
+    try {
+      field.setAccessible(true);
+      field.set(extensionContext.getTestInstance().get(), driver);
+    } catch (IllegalAccessException e) {
+      throw new Error(String.format("Could not access or set webdriver in field: %s - is this field public?", field), e);
     }
+
   }
+
 
   @Override
   public void afterEach(ExtensionContext extensionContext) {
@@ -71,4 +40,6 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback {
       driver.quit();
     }
   }
+
+
 }

@@ -23,8 +23,8 @@ public class CoursesCatalogTests {
   void checkPageHeaderWhenClickOnCourseTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByName(CoursesData.DEV_REL);
-    //.headerIsEqualTo(CoursesData.DEVELOPER_RELATIONS, true);
+        .clickCourseByName(CoursesData.DEV_REL)
+        .headerIsEqualTo(CoursesData.DEVELOPER_RELATIONS, true);
   }
 
   @Test
@@ -34,6 +34,7 @@ public class CoursesCatalogTests {
         .clickCourseByDate(true)
         .checkDate();
   }
+
   @Execution(ExecutionMode.SAME_THREAD)
   @ParameterizedTest
   @DisplayName("Сlick on two specializations")
