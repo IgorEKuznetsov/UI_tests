@@ -45,14 +45,14 @@ public class ChromeWebDriver implements IDriver {
     logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
-    WebDriverManager.chromedriver().setup();
+    //WebDriverManager.chromedriver().setup();
 
-    return new ChromeDriver(chromeOptions);
+    //return new ChromeDriver(chromeOptions);
 
-    //    return new RemoteWebDriver(
-    //        URI.create("http://192.168.56.1:24/wd/hub").toURL(),
-    //        chromeOptions
-    //    );
+    return new RemoteWebDriver(
+        URI.create("http://192.168.56.1:24/wd/hub").toURL(),
+        chromeOptions
+    );
   }
 
 }
