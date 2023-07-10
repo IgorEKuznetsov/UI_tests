@@ -10,7 +10,8 @@ public enum CoursesData {
   DEV_REL("DevRel"),
   DEVELOPER_RELATIONS("Developer Relations"),
   MACHINE_LEARNING("Machine Learning"),
-  IOS("iOS Developer");
+  IOS("iOS Developer"),
+  SYSANALITIC("Системный аналитик. Team Lead");
 
 
 

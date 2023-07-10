@@ -12,10 +12,10 @@ public class DriverFactory {
 
   private String browserType = System.getProperty("browser", "chrome").toLowerCase(Locale.ROOT);
 
-  public EventFiringWebDriver getBrowserDriver() throws MalformedURLException {
+  public WebDriver getBrowserDriver() throws MalformedURLException {
     switch (this.browserType) {
       case "chrome":
-        return new EventFiringWebDriver(new ChromeWebDriver().getDriver());
+        return new ChromeWebDriver().getDriver();
       case "firefox":
         return new EventFiringWebDriver(new FirefoxWebDriver().getDriver());
       case "opera":

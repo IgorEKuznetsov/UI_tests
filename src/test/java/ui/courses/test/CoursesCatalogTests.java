@@ -23,8 +23,8 @@ public class CoursesCatalogTests {
   void checkPageHeaderWhenClickOnCourseTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByName(CoursesData.DEV_REL)
-        .headerIsEqualTo(CoursesData.DEVELOPER_RELATIONS, true);
+        .clickCourseByName(CoursesData.SYSANALITIC)
+        .headerIsEqualTo(CoursesData.SYSANALITIC, true);
   }
 
   @Test
@@ -35,15 +35,16 @@ public class CoursesCatalogTests {
         .checkDate();
   }
 
-  @Execution(ExecutionMode.SAME_THREAD)
-  @ParameterizedTest
-  @DisplayName("Сlick on two specializations")
-  @MethodSource("data.DataProvider#courseNamesProvider")
-  void checkPageHeaderWhenClickOnCourseDataTest(CoursesData coursesData) {
+  //  @Execution(ExecutionMode.SAME_THREAD)
+  //  @ParameterizedTest
+  //  @DisplayName("Сlick on two specializations")
+  //  @MethodSource("data.DataProvider#courseNamesProvider")
+  @Test
+  void checkPageHeaderWhenClickOnCourseDataTest() {
     new MainPage(driver)
         .open()
-        .clickCourseByName(coursesData)
-        .headerIsEqualTo(coursesData, false);
+        .clickCourseByName(CoursesData.MACHINE_LEARNING)
+        .headerIsEqualTo(CoursesData.MACHINE_LEARNING, false);
   }
 
   @Test

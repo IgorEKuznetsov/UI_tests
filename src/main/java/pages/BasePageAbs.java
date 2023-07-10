@@ -54,7 +54,7 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
     return StringUtils.stripEnd(System.getProperty("driver.host"), "/");
   }
 
-  private String courseLocator = "//strong[contains(text(), '%s')]";
+  private String courseLocator = "//div[contains(text(), '%s')]";
   private String specializationLocator = "//h1[contains(text(), '%s')]";
 
 
@@ -69,7 +69,7 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
   }
 
   public void deleteCookiesWebElement(WebDriver driver, WebElement element) {
-    if (element.isDisplayed()) {
+    if (element.getSize() != null) {
       ((JavascriptExecutor) driver).executeScript("arguments[0].style.display='none'", element);
       log.info("Cookie element was closed");
     } else log.info("Cookie element not visible");

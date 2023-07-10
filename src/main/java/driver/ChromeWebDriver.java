@@ -37,7 +37,7 @@ public class ChromeWebDriver implements IDriver {
     chromeOptions.setCapability("browserName", System.getProperty("browser", "chrome"));
     chromeOptions.setCapability("browserVersion", System.getProperty("browser.version", "112.0"));
     chromeOptions.setCapability("enableVNC", true);
-    chromeOptions.setCapability("sessionTimeout", "10m");
+    //chromeOptions.setCapability("sessionTimeout", "10m");
     //chromeOptions.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "eager");
     chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 

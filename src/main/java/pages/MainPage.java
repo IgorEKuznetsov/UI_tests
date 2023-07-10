@@ -25,7 +25,7 @@ public class MainPage extends BasePageAbs<MainPage> {
   }
 
   private String searchCourseDate;
-  private String courseNameLocator = "//div[contains(text(), '%s')]/..";
+  private String courseNameLocator = "//h5[contains(text(), '%s')]/..";
   @FindBy(css = ".lessons__new-item-bottom")
   private List<WebElement> startCourseSelector;
   @FindBy(css = ".cookies")
@@ -47,7 +47,7 @@ public class MainPage extends BasePageAbs<MainPage> {
   }
 
   public void clickCourseBy(WebElement element) {
-    deleteCookiesWebElement(driver, cookieElement);
+    //deleteCookiesWebElement(driver, cookieElement);
     actions.moveToElement(element).build().perform();
     Assertions.assertAll(
         () -> Assertions.assertTrue(waiter.elementShouldBeVisible(element)),
