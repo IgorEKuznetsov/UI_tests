@@ -12,7 +12,7 @@
         <driver.host>https://otus.ru</driver.host>
         <selenium.java.version>3.141.59</selenium.java.version>
         <webdrivermanager.version>5.3.2</webdrivermanager.version>
-        <junit.version>5.10.0-M1</junit.version>
+        <junit.version>5.9.1</junit.version>
         <faker.version>1.0.2</faker.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
@@ -25,7 +25,7 @@
         <thread.count>5</thread.count>
 
         <browser>chrome</browser>
-        <browser.version>112.0</browser.version>
+        <browser.version>115.0</browser.version>
         <webdriver.timeouts.implicitlywait>5000</webdriver.timeouts.implicitlywait>
 
     </properties>
@@ -89,8 +89,8 @@
                             junit.jupiter.execution.parallel.enabled = true
                             junit.jupiter.execution.parallel.mode.classes.default = concurrent
                             junit.jupiter.execution.parallel.mode.default = same_thread
-                            <!--                            junit.jupiter.execution.parallel.config.strategy = fixed-->
-                            <!--                            junit.jupiter.execution.parallel.config.fixed.parallelism = 4-->
+<!--                            junit.jupiter.execution.parallel.config.strategy = fixed-->
+<!--                            junit.jupiter.execution.parallel.config.fixed.parallelism = 4-->
                         </configurationParameters>
                     </properties>
                     <systemProperties>
