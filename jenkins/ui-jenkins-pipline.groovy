@@ -14,7 +14,7 @@ timeout(180) {
         //    }
         //}
         stage('Checkout') {
-            checkout scv
+            checkout csv
         }
         stage('Run tests') {
             tests_exit_code = sh(
