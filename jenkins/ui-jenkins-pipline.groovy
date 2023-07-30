@@ -17,7 +17,7 @@ timeout(180) {
             )
 
             if (tests_exit_code != 0) {
-                currentBuild.status = 'UNSTABLE'
+                currentBuild.result = 'UNSTABLE'
             }
         }
         stage('Publish allure results') {
