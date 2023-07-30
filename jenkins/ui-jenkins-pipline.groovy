@@ -22,9 +22,11 @@ timeout(180) {
         }
         stage('Publish allure results') {
             allure([
-                    results          : [{ path: 'allure-results' }],
-                    disabled         : false,
-                    reportBuildPolicy: 'ALWAYS'
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'allure-results']]
             ])
         }
     }
