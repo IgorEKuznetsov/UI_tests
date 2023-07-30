@@ -35,9 +35,9 @@ public class ChromeWebDriver implements IDriver {
     //DesiredCapabilities capabilities = new DesiredCapabilities();
 
     chromeOptions.setCapability("browserName", System.getProperty("browser", "chrome"));
-    chromeOptions.setCapability("browserVersion", System.getProperty("browser.version", "112.0"));
+    chromeOptions.setCapability("browserVersion", System.getProperty("browser.version", "115.0"));
     chromeOptions.setCapability("enableVNC", true);
-    //chromeOptions.setCapability("sessionTimeout", "10m");
+    chromeOptions.setCapability("sessionTimeout", "10m");
     //chromeOptions.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "eager");
     chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
@@ -45,9 +45,9 @@ public class ChromeWebDriver implements IDriver {
     logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
-    //WebDriverManager.chromedriver().setup();
-
-    //return new ChromeDriver(chromeOptions);
+    //    WebDriverManager.chromedriver().setup();
+    //
+    //    return new ChromeDriver(chromeOptions);
 
     return new RemoteWebDriver(
         URI.create("http://192.168.56.1:24/wd/hub").toURL(),

@@ -1,7 +1,6 @@
 package pages;
 
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
 public class CoursePage extends BasePageAbs<CoursePage> {
@@ -17,7 +16,7 @@ public class CoursePage extends BasePageAbs<CoursePage> {
   }
 
   //private String startCourseLocator = "//*[contains(text(), '%s')]";
-
+  @Step("Проверяем дату курса")
   public void checkDate() {
     //String locator = String.format(startCourseLocator, date);
     //String coursePageDateStart = driver.findElements(By.xpath(locator)).get(0).getText();

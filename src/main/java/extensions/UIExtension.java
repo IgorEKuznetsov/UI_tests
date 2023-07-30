@@ -1,29 +1,29 @@
 package extensions;
 
 import annotations.Driver;
+import io.qameta.allure.Allure;
+import listeners.CustomListener;
 import org.junit.jupiter.api.extension.*;
-
-import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
-
 import driver.DriverFactory;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 
-public class UIExtension implements BeforeEachCallback, AfterEachCallback {
+public class UIExtension implements BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
 
-  private WebDriver driver = null;
+  private EventFiringWebDriver driver = null;
 
 
   @Override
   public void beforeEach(ExtensionContext extensionContext) throws Exception {
     driver = new DriverFactory().getBrowserDriver();
-    System.out.println("********************");
-    System.out.println(driver);
-    //driver.register(new CustomListener());
+    driver.register(new CustomListener());
 
     Class<?> testClass = extensionContext.getTestClass().get();
     Field[] fields = testClass.getDeclaredFields();
@@ -42,6 +42,14 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback {
         }
     );
 
+  }
+
+  @Override
+  public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
+    boolean testResult = extensionContext.getExecutionException().isPresent();
+    if (testResult) {
+      Allure.addAttachment("Failed screenshot", new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+    }
   }
 
   @Override

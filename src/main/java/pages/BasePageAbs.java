@@ -5,6 +5,7 @@ import annotations.UrlTemplate;
 import annotations.Urls;
 import baseobject.BaseObj;
 import data.CoursesData;
+import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
@@ -19,11 +20,13 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
     super(driver);
   }
 
+  @Step("Открываем главную страницу")
   public T open() {
     driver.get(getBaseUrl() + getPath());
     return (T) this;
   }
 
+  @Step("Открываем страницу категории")
   public T open(String categoryName) {
     driver.get(getBaseUrl() + getPathFromTemplate(categoryName));
     return (T) this;
@@ -57,7 +60,7 @@ public abstract class BasePageAbs<T> extends BaseObj<T> {
   private String courseLocator = "//div[contains(text(), '%s')]";
   private String specializationLocator = "//h1[contains(text(), '%s')]";
 
-
+  @Step("Проверяем заголовок курса")
   public T headerIsEqualTo(CoursesData coursesData, Boolean isCourseLocator) {
     String locator = "";
     if (isCourseLocator) {

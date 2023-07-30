@@ -1,4 +1,5 @@
 package listeners;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.slf4j.Logger;
@@ -82,6 +83,8 @@ public class CustomListener implements WebDriverEventListener {
   public void beforeClickOn(WebElement element, WebDriver driver) {
     log.info("Click on element: " + element.getText());
     ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='5px solid red'", element);
+
+    Allure.step("клик по элементу " + element.getText());
 
   }
 

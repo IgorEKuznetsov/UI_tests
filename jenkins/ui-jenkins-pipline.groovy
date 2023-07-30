@@ -7,12 +7,6 @@ timeout(180) {
             currentBuild.description = summary.replaceAll("\n", "<br>")
             owner_user_id = "${env.BUILD_USER_ID}"
         }
-        //yaml_object = readYaml $YAML_CONFIG
-        //for (key in params.keySet()) {
-        //    {
-        //        System.setProperty(key, params[key])
-        //    }
-        //}
         stage('Checkout') {
             checkout scm
         }
@@ -25,6 +19,12 @@ timeout(180) {
                 currentBuild.status = 'UNSTABLE'
             }
         }
-
+        stage('Publish allure results') {
+            allure([
+                    results : [{path: 'allure-results'}],
+                    disabled         : false,
+                    reportBuildPolicy: ALWAYS
+            ])
+        }
     }
 }

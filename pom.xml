@@ -16,7 +16,7 @@
         <faker.version>1.0.2</faker.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
-
+        <aspectj.version>1.9.9.1</aspectj.version>
         <forkCount>1</forkCount>
         <reuseForks>true</reuseForks>
         <parallel>all</parallel>
@@ -58,8 +58,11 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>2.23.0</version>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -88,10 +91,14 @@
                         <configurationParameters>
                             junit.jupiter.execution.parallel.enabled = true
                             junit.jupiter.execution.parallel.mode.classes.default = concurrent
-                            junit.jupiter.execution.parallel.mode.default = same_thread
+<!--                            junit.jupiter.execution.parallel.mode.default = same_thread-->
 <!--                            junit.jupiter.execution.parallel.config.strategy = fixed-->
 <!--                            junit.jupiter.execution.parallel.config.fixed.parallelism = 4-->
                         </configurationParameters>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit5.AllureJunit5</value>
+                        </property>
                     </properties>
                     <systemProperties>
                         <property>
@@ -99,14 +106,17 @@
                             <value>true</value>
                         </property>
                     </systemProperties>
-
                     <systemPropertyVariables>
                         <driver.host>${driver.host}</driver.host>
                         <browser>${browser}</browser>
                         <browser.version>${browser.version}</browser.version>
                         <webdriver.timeouts.implicitlywait>${webdriver.timeouts.implicitlywait}
                         </webdriver.timeouts.implicitlywait>
+                        <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -118,6 +128,11 @@
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-engine</artifactId>
                         <version>${junit.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

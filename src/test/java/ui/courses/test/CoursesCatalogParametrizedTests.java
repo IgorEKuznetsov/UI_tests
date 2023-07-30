@@ -2,15 +2,12 @@ package ui.courses.test;
 
 import annotations.Driver;
 import extensions.UIExtension;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import data.CoursesData;
 import org.openqa.selenium.WebDriver;
-import pages.CoursesCatalog;
 import pages.MainPage;
 
 @ExtendWith(UIExtension.class)
@@ -19,6 +16,7 @@ public class CoursesCatalogParametrizedTests {
   public WebDriver driver;
 
   @ParameterizedTest
+  @DisplayName("Проверка заголовков курсов")
   @MethodSource("data.DataProvider#courseNamesProvider")
   void checkPageHeaderWhenClickOnCourseDataTest(CoursesData coursesData) {
     new MainPage(driver)

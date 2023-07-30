@@ -3,6 +3,7 @@ package pages;
 import annotations.Path;
 import data.CoursesData;
 import data.MonthData;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,20 +25,21 @@ public class MainPage extends BasePageAbs<MainPage> {
     super(driver);
   }
 
+  private String courseDate;
   private String searchCourseDate;
   private String courseNameLocator = "//h5[contains(text(), '%s')]/..";
-  @FindBy(css = ".lessons__new-item-bottom")
+  @FindBy(xpath = "//h2[contains(text(), 'Специализации')]/../div/div")
   private List<WebElement> startCourseSelector;
   @FindBy(css = ".cookies")
   private WebElement cookieElement;
-
+  @Step("Выполняем поиск курса по имени")
   public CoursePage clickCourseByName(CoursesData coursesData) {
     WebElement courseSelector = driver.findElement(By.xpath(String.format(courseNameLocator, coursesData.getName())));
     clickCourseBy(courseSelector);
 
     return new CoursePage(driver);
   }
-
+  @Step("Поиск курса по дате")
   public CoursePage clickCourseByDate(Boolean isEarly) {
     WebElement courseSelector = startCourseSelector.stream()
         .filter(el -> el.getText().contains(getCourseDate(isEarly))).collect(Collectors.toList()).get(0);
@@ -58,7 +60,7 @@ public class MainPage extends BasePageAbs<MainPage> {
 
   public String getCourseDate(Boolean isEarly) {
     SimpleDateFormat format = new SimpleDateFormat("d MMMM", Locale.ROOT);
-    Pattern searchMonthPattern = Pattern.compile("(\\d{1,2}\\s(January|February|March|April|May|June|July|August|September|October|November|December))");
+    Pattern searchMonthPattern = Pattern.compile("(\\d{1,2}\\s(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря))");
     List<String> filtered = new ArrayList<>();
 
     for (WebElement element : startCourseSelector) {
@@ -67,8 +69,8 @@ public class MainPage extends BasePageAbs<MainPage> {
         filtered.add(m.group(1));
       }
     }
-    return searchCourseDate = filtered.stream()
-        // .map(el -> el.replaceAll("января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря", getMonth(el)))
+    courseDate = filtered.stream()
+        .map(el -> el.replaceAll("января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря", getMonth(el)))
         .map(el -> {
           try {
             return format.parse(el);
@@ -86,7 +88,7 @@ public class MainPage extends BasePageAbs<MainPage> {
         .collect(Collectors.toList()).get(0);
     // return searchCourseDate;
 
-    // return searchCourseDate = courseDate.replaceAll("Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec", getMonth(courseDate));
+    return searchCourseDate = courseDate.replaceAll("Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec", getMonth(courseDate));
   }
 
   public String getMonth(String text) {
