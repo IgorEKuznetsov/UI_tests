@@ -11,7 +11,8 @@ timeout(180) {
             checkout scm
         }
         stage('Run tests') {
-            tests_exit_code = sh(
+            def tests_exit_code = sh(
+                    returnStatus: true,
                     script: "mvn test -Dbrowser=$BROWSER_NAME -Dbrowser.version=$BROWSER_VERSION",
             )
 
@@ -21,7 +22,7 @@ timeout(180) {
         }
         stage('Publish allure results') {
             allure([
-                    results : [{path: 'allure-results'}],
+                    results          : [{ path: 'allure-results' }],
                     disabled         : false,
                     reportBuildPolicy: ALWAYS
             ])
