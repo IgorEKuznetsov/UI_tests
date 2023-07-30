@@ -24,7 +24,7 @@ timeout(180) {
             allure([
                     results          : [{ path: 'allure-results' }],
                     disabled         : false,
-                    reportBuildPolicy: ALWAYS
+                    reportBuildPolicy: 'ALWAYS'
             ])
         }
     }
